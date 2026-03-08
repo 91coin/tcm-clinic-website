@@ -1,57 +1,491 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐥 Duck馨的益智小游戏</title>
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-min-height: 100vh;
-background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-font-family: 'Microsoft YaHei', sans-serif;
-}
-h1 { color: #fff; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); font-size: 24px; }
-#gameCanvas { border: 4px solid #fff; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); background: #e8f5e9; }
-.score { color: #fff; font-size: 20px; margin-top: 10px; }
-.controls { color: #fff; margin-top: 15px; font-size: 14px; }
-.btn { background: #fff; color: #667eea; border: none; padding: 10px 30px; border-radius: 25px; font-size: 16px; cursor: pointer; margin-top: 10px; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数字迷宫 - 益智游戏</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .game-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .level-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .level-info span {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .game-board {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .cell {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(145deg, #e6e6e6, #ffffff);
+            border: none;
+            border-radius: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 5px 5px 10px #d1d1d1, -5px -5px 10px #ffffff;
+        }
+
+        .cell:hover {
+            transform: translateY(-3px);
+            box-shadow: 8px 8px 15px #d1d1d1, -8px -8px 15px #ffffff;
+        }
+
+        .cell.selected {
+            background: linear-gradient(145deg, #667eea, #764ba2);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .cell.correct {
+            background: linear-gradient(145deg, #11998e, #38ef7d);
+            color: white;
+            animation: pulse 0.5s ease;
+        }
+
+        .cell.wrong {
+            background: linear-gradient(145deg, #eb3349, #f45c43);
+            color: white;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: linear-gradient(145deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            min-height: 50px;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .message.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .target-display {
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: linear-gradient(145deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 15px;
+        }
+
+        .target-display span {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .instructions {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .instructions h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .score-item {
+            text-align: center;
+            padding: 10px 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .score-item .label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .score-item .value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+    </style>
 </head>
 <body>
-<h1>🐥 Duck馨的益智小游戏</h1>
-<canvas id="gameCanvas" width="400" height="400"></canvas>
-<div class="score">得分: <span id="score">0</span></div>
-<button class="btn" onclick="startGame()">开始游戏</button>
-<div class="controls">使用方向键 ↑↓←→ 控制小鸭子</div>
-<script>
-const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
-const gridSize = 20;
-const tileCount = canvas.width / gridSize;
-let snake = [{x: 10, y: 10}];
-let food = {x: 15, y: 15};
-let dx = 0, dy = 0, score = 0, gameLoop, gameRunning = false;
-let particles = [];
-function createParticle(x, y) {
-for (let i = 0; i < 6; i++) particles.push({x: x*gridSize+gridSize/2, y: y*gridSize+gridSize/2, vx: (Math.random()-0.5)*4, vy: (Math.random()-0.5)*4, life: 30, color: `hsl(${Math.random()*60+30},100%,70%)`});
-}
-function updateParticles() { particles = particles.filter(p => { p.x+=p.vx; p.y+=p.vy; p.life--; return p.life>0; }); }
-function drawParticles() { particles.forEach(p => { ctx.fillStyle=p.color; ctx.globalAlpha=p.life/30; ctx.beginPath(); ctx.arc(p.x,p.y,4,0,Math.PI*2); ctx.fill(); }); ctx.globalAlpha=1; }
-function drawDuck(x,y,isHead) { const px=x*gridSize, py=y*gridSize; ctx.fillStyle='#FFD700'; ctx.beginPath(); ctx.arc(px+gridSize/2,py+gridSize/2,gridSize/2-2,0,Math.PI*2); ctx.fill(); if(isHead){ ctx.fillStyle='#000'; ctx.beginPath(); ctx.arc(px+gridSize/2+3,py+gridSize/2-3,3,0,Math.PI*2); ctx.fill(); ctx.fillStyle='#FF8C00'; ctx.beginPath(); ctx.ellipse(px+gridSize/2+8,py+gridSize/2+2,6,4,0,0,Math.PI*2); ctx.fill(); } else { ctx.fillStyle='#FFA500'; ctx.beginPath(); ctx.arc(px+gridSize/2,py+gridSize/2,4,0,Math.PI*2); ctx.fill(); } }
-function drawFlower(x,y) { const px=x*gridSize+gridSize/2, py=y*gridSize+gridSize/2; ctx.fillStyle='#FF69B4'; for(let i=0;i<5;i++){ const angle=(i*Math.PI*2)/5; ctx.beginPath(); ctx.ellipse(px+Math.cos(angle)*6,py+Math.sin(angle)*6,4,4,0,0,Math.PI*2); ctx.fill(); } ctx.fillStyle='#FFD700'; ctx.beginPath(); ctx.arc(px,py,4,0,Math.PI*2); ctx.fill(); }
-function draw() { ctx.fillStyle='#e8f5e9'; ctx.fillRect(0,0,canvas.width,canvas.height); ctx.strokeStyle='#c8e6c9'; for(let i=0;i<=tileCount;i++){ ctx.beginPath(); ctx.moveTo(i*gridSize,0); ctx.lineTo(i*gridSize,canvas.height); ctx.stroke(); ctx.beginPath(); ctx.moveTo(0,i*gridSize); ctx.lineTo(canvas.width,i*gridSize); ctx.stroke(); } snake.forEach((s,i)=>drawDuck(s.x,s.y,i===0)); drawFlower(food.x,food.y); updateParticles(); drawParticles(); }
-function update() { if(!gameRunning)return; const head={x:snake[0].x+dx,y:snake[0].y+dy}; if(head.x<0||head.x>=tileCount||head.y<0||head.y>=tileCount){gameOver();return;} if(snake.some(s=>s.x===head.x&&s.y===head.y)){gameOver();return;} snake.unshift(head); if(head.x===food.x&&head.y===food.y){score+=10;document.getElementById('score').textContent=score;createParticle(food.x,food.y);placeFood();}else snake.pop(); }
-function placeFood() { do{food={x:Math.floor(Math.random()*tileCount),y:Math.floor(Math.random()*tileCount)};}while(snake.some(s=>s.x===food.x&&s.y===food.y)); }
-function gameOver() { gameRunning=false; clearInterval(gameLoop); ctx.fillStyle='rgba(0,0,0,0.7)'; ctx.fillRect(0,0,canvas.width,canvas.height); ctx.fillStyle='#fff'; ctx.font='bold 30px Microsoft YaHei'; ctx.textAlign='center'; ctx.fillText('游戏结束!',canvas.width/2,canvas.height/2-20); ctx.font='20px Microsoft YaHei'; ctx.fillText(`得分: ${score}`,canvas.width/2,canvas.height/2+20); }
-function startGame() { snake=[{x:10,y:10}]; dx=1; dy=0; score=0; document.getElementById('score').textContent=score; particles=[]; placeFood(); gameRunning=true; if(gameLoop)clearInterval(gameLoop); gameLoop=setInterval(()=>{update();draw();},150); }
-document.addEventListener('keydown',e=>{ if(!gameRunning)return; switch(e.key){ case'ArrowUp':case'w':case'W':if(dy===0){dx=0;dy=-1;}break; case'ArrowDown':case's':case'S':if(dy===0){dx=0;dy=1;}break; case'ArrowLeft':case'a':case'A':if(dx===0){dx=-1;dy=0;}break; case'ArrowRight':case'd':case'D':if(dx===0){dx=1;dy=0;}break; } });
-let touchStartX=0,touchStartY=0; canvas.addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;touchStartY=e.touches[0].clientY;}); canvas.addEventListener('touchend',e=>{ if(!gameRunning)return; const touchEndX=e.changedTouches[0].clientX,touchEndY=e.changedTouches[0].clientY; const dtx=touchEndX-touchStartX,dty=touchEndY-touchStartY; if(Math.abs(dtx)>Math.abs(dty)){if(dtx>0&&dx!==-1){dx=1;dy=0;}else if(dtx<0&&dx!==1){dx=-1;dy=0;}}else{if(dty>0&&dy!==-1){dx=0;dy=1;}else if(dty<0&&dy!==1){dx=0;dy=-1;}} });
-draw();
-</script>
+    <div class="game-container">
+        <h1>🧩 数字迷宫</h1>
+        <p class="subtitle">挑战你的逻辑思维！</p>
+        
+        <div class="score-board">
+            <div class="score-item">
+                <div class="label">关卡</div>
+                <div class="value" id="level">1</div>
+            </div>
+            <div class="score-item">
+                <div class="label">得分</div>
+                <div class="value" id="score">0</div>
+            </div>
+            <div class="score-item">
+                <div class="label">提示</div>
+                <div class="value" id="hints">3</div>
+            </div>
+        </div>
+
+        <div class="instructions" id="instructions">
+            <h3>🎮 游戏规则</h3>
+            <p id="rule-text">点击数字，使选中的数字之和等于目标值。每个数字只能使用一次！</p>
+        </div>
+
+        <div class="target-display">
+            目标: <span id="target">?</span>
+        </div>
+
+        <div class="game-board" id="gameBoard"></div>
+
+        <div class="controls">
+            <button class="btn-primary" onclick="checkAnswer()">提交答案</button>
+            <button class="btn-secondary" onclick="clearSelection()">清空选择</button>
+            <button class="btn-secondary" onclick="useHint()">💡 提示</button>
+            <button class="btn-secondary" onclick="newGame()">🔄 新游戏</button>
+        </div>
+
+        <div class="message" id="message"></div>
+    </div>
+
+    <script>
+        let currentLevel = 1;
+        let score = 0;
+        let hints = 3;
+        let selectedCells = [];
+        let cells = [];
+        let targetSum = 0;
+        let gameMode = 'sum'; // sum, sequence, memory
+
+        const levels = [
+            { size: 3, mode: 'sum', min: 10, max: 20 },
+            { size: 3, mode: 'sum', min: 15, max: 30 },
+            { size: 4, mode: 'sum', min: 20, max: 40 },
+            { size: 4, mode: 'sequence', min: 1, max: 10 },
+            { size: 4, mode: 'memory', min: 1, max: 8 },
+            { size: 5, mode: 'sum', min: 30, max: 60 },
+            { size: 5, mode: 'sequence', min: 1, max: 15 },
+            { size: 5, mode: 'memory', min: 1, max: 12 },
+        ];
+
+        function initGame() {
+            const level = levels[Math.min(currentLevel - 1, levels.length - 1)];
+            gameMode = level.mode;
+            
+            document.getElementById('level').textContent = currentLevel;
+            document.getElementById('score').textContent = score;
+            document.getElementById('hints').textContent = hints;
+            
+            updateInstructions();
+            generateBoard(level);
+        }
+
+        function updateInstructions() {
+            const ruleText = document.getElementById('rule-text');
+            if (gameMode === 'sum') {
+                ruleText.textContent = '点击数字，使选中的数字之和等于目标值。每个数字只能使用一次！';
+            } else if (gameMode === 'sequence') {
+                ruleText.textContent = '按从小到大的顺序点击所有数字，考验你的眼力和手速！';
+            } else if (gameMode === 'memory') {
+                ruleText.textContent = '记住数字的位置，然后按从小到大的顺序点击。数字会隐藏哦！';
+            }
+        }
+
+        function generateBoard(level) {
+            const board = document.getElementById('gameBoard');
+            board.innerHTML = '';
+            board.style.gridTemplateColumns = `repeat(${level.size}, 80px)`;
+            
+            cells = [];
+            selectedCells = [];
+            
+            const numbers = [];
+            for (let i = 0; i < level.size * level.size; i++) {
+                numbers.push(Math.floor(Math.random() * (level.max - level.min + 1)) + level.min);
+            }
+            
+            if (gameMode === 'sum') {
+                // 确保有解
+                const shuffled = [...numbers].sort(() => Math.random() - 0.5);
+                const solutionSize = Math.floor(Math.random() * 3) + 2;
+                targetSum = shuffled.slice(0, solutionSize).reduce((a, b) => a + b, 0);
+            } else if (gameMode === 'sequence') {
+                targetSum = '按顺序点击 1-' + (level.size * level.size);
+                numbers.sort(() => Math.random() - 0.5);
+                for (let i = 0; i < numbers.length; i++) {
+                    numbers[i] = i + 1;
+                }
+            } else if (gameMode === 'memory') {
+                targetSum = '记住位置，从小到大';
+                numbers.sort(() => Math.random() - 0.5);
+                for (let i = 0; i < numbers.length; i++) {
+                    numbers[i] = i + 1;
+                }
+            }
+            
+            document.getElementById('target').textContent = targetSum;
+            
+            numbers.forEach((num, index) => {
+                const cell = document.createElement('button');
+                cell.className = 'cell';
+                cell.textContent = num;
+                cell.dataset.value = num;
+                cell.dataset.index = index;
+                cell.onclick = () => selectCell(cell);
+                board.appendChild(cell);
+                cells.push(cell);
+            });
+            
+            if (gameMode === 'memory') {
+                setTimeout(() => {
+                    cells.forEach(cell => {
+                        cell.textContent = '?';
+                    });
+                }, 3000);
+            }
+            
+            showMessage('游戏开始！加油！', 'info');
+        }
+
+        function selectCell(cell) {
+            if (cell.classList.contains('correct')) return;
+            
+            if (gameMode === 'sum') {
+                if (cell.classList.contains('selected')) {
+                    cell.classList.remove('selected');
+                    selectedCells = selectedCells.filter(c => c !== cell);
+                } else {
+                    cell.classList.add('selected');
+                    selectedCells.push(cell);
+                }
+            } else if (gameMode === 'sequence' || gameMode === 'memory') {
+                const expectedValue = selectedCells.length + 1;
+                const actualValue = parseInt(cell.dataset.value);
+                
+                if (actualValue === expectedValue) {
+                    cell.classList.add('correct');
+                    cell.textContent = actualValue;
+                    selectedCells.push(cell);
+                    
+                    if (selectedCells.length === cells.length) {
+                        levelComplete();
+                    }
+                } else {
+                    cell.classList.add('wrong');
+                    setTimeout(() => cell.classList.remove('wrong'), 500);
+                    showMessage('顺序错了！再试一次', 'error');
+                }
+            }
+        }
+
+        function checkAnswer() {
+            if (gameMode !== 'sum') return;
+            
+            const sum = selectedCells.reduce((acc, cell) => acc + parseInt(cell.dataset.value), 0);
+            
+            if (sum === targetSum) {
+                selectedCells.forEach(cell => cell.classList.add('correct'));
+                selectedCells.forEach(cell => cell.classList.remove('selected'));
+                score += selectedCells.length * 10 + 50;
+                levelComplete();
+            } else {
+                showMessage(`和为 ${sum}，不等于目标 ${targetSum}，再试一次！`, 'error');
+                selectedCells.forEach(cell => {
+                    cell.classList.add('wrong');
+                    setTimeout(() => {
+                        cell.classList.remove('wrong');
+                        cell.classList.remove('selected');
+                    }, 500);
+                });
+                selectedCells = [];
+            }
+        }
+
+        function levelComplete() {
+            showMessage(`🎉 恭喜通关第 ${currentLevel} 关！`, 'success');
+            score += 100;
+            currentLevel++;
+            
+            setTimeout(() => {
+                initGame();
+            }, 2000);
+        }
+
+        function clearSelection() {
+            selectedCells.forEach(cell => cell.classList.remove('selected'));
+            selectedCells = [];
+        }
+
+        function useHint() {
+            if (hints <= 0) {
+                showMessage('提示用完了！', 'error');
+                return;
+            }
+            
+            hints--;
+            document.getElementById('hints').textContent = hints;
+            
+            if (gameMode === 'sum') {
+                // 高亮一个正确答案
+                const correctCells = findSolution();
+                if (correctCells.length > 0) {
+                    const randomCell = correctCells[Math.floor(Math.random() * correctCells.length)];
+                    randomCell.style.border = '3px solid #667eea';
+                    setTimeout(() => {
+                        randomCell.style.border = '';
+                    }, 2000);
+                }
+            } else {
+                showMessage('这一关需要你自己思考哦！', 'info');
+            }
+        }
+
+        function findSolution() {
+            // 简化的解决方案查找
+            for (let i = 0; i < cells.length; i++) {
+                for (let j = i + 1; j < cells.length; j++) {
+                    const sum = parseInt(cells[i].dataset.value) + parseInt(cells[j].dataset.value);
+                    if (sum === targetSum) {
+                        return [cells[i], cells[j]];
+                    }
+                }
+            }
+            return [];
+        }
+
+        function newGame() {
+            currentLevel = 1;
+            score = 0;
+            hints = 3;
+            initGame();
+        }
+
+        function showMessage(text, type) {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.className = 'message ' + type;
+        }
+
+        // 启动游戏
+        initGame();
+    </script>
 </body>
 </html>
