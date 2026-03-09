@@ -3,119 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>仁和堂中医馆 | 传承千年中医智慧</title>
+    <title>仁和堂中医馆 | 传承千年智慧 · 守护万家健康</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --ink-black: #1a1a1a;
-            --cinnabar: #c45c48;
-            --rice-paper: #f5f0e8;
-            --bamboo: #5a7a5a;
-            --gold: #c9a227;
-            --mist: rgba(255,255,255,0.1);
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #8B4513;
+            --primary-light: #D2691E;
+            --secondary: #2F4F4F;
+            --accent: #C9A227;
+            --bg-cream: #FAF7F2;
+            --text-dark: #2C2C2C;
+            --text-light: #666;
+            --white: #FFFFFF;
+            --shadow: rgba(0,0,0,0.08);
+        }
+
         body {
             font-family: 'Noto Sans SC', sans-serif;
-            background-color: var(--rice-paper);
-            color: var(--ink-black);
-            line-height: 1.8;
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* 水墨背景动画 */
-        .ink-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.03;
-            background: 
-                radial-gradient(ellipse at 20% 30%, rgba(0,0,0,0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 70%, rgba(0,0,0,0.08) 0%, transparent 40%),
-                radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.05) 0%, transparent 60%);
-        }
-
         /* 导航栏 */
-        nav {
+        .navbar {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(245, 240, 232, 0.95);
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(250,247,242,0.95) 100%);
+            backdrop-filter: blur(20px);
             z-index: 1000;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-        }
-
-        nav.scrolled {
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 40px;
+            padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 80px;
+            box-shadow: 0 2px 30px var(--shadow);
+            transition: all 0.3s ease;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
 
         .logo-icon {
             width: 50px;
             height: 50px;
-            background: var(--cinnabar);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 24px;
+            font-weight: bold;
             font-family: 'Noto Serif SC', serif;
         }
 
-        .logo-text {
+        .logo-text h1 {
             font-family: 'Noto Serif SC', serif;
-            font-size: 28px;
+            font-size: 1.5rem;
+            color: var(--primary);
             font-weight: 700;
-            color: var(--ink-black);
-            letter-spacing: 4px;
         }
 
-        .logo-sub {
-            font-size: 12px;
-            color: var(--bamboo);
+        .logo-text p {
+            font-size: 0.75rem;
+            color: var(--text-light);
             letter-spacing: 2px;
-            margin-top: -5px;
         }
 
         .nav-links {
             display: flex;
-            gap: 40px;
+            gap: 2.5rem;
             list-style: none;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: var(--ink-black);
-            font-size: 16px;
+            color: var(--text-dark);
             font-weight: 500;
+            font-size: 0.95rem;
             position: relative;
             padding: 5px 0;
             transition: color 0.3s;
@@ -128,367 +105,257 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--cinnabar);
+            background: var(--accent);
             transition: width 0.3s;
         }
 
         .nav-links a:hover {
-            color: var(--cinnabar);
+            color: var(--primary);
         }
 
         .nav-links a:hover::after {
             width: 100%;
         }
 
-        /* Hero 区域 */
+        .cta-button {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(139,69,19,0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139,69,19,0.4);
+        }
+
+        /* Hero Section */
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
+            padding: 120px 5% 80px;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(201,162,39,0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(139,69,19,0.08) 0%, transparent 40%),
+                var(--bg-cream);
             position: relative;
-            background: linear-gradient(135deg, #f5f0e8 0%, #e8e0d0 100%);
             overflow: hidden;
         }
 
         .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%239C92AC' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E"),
-                linear-gradient(to bottom, transparent, rgba(196, 92, 72, 0.05));
-            opacity: 0.5;
-        }
-
-        .hero-content {
-            text-align: center;
-            z-index: 1;
-            max-width: 900px;
-            padding: 0 40px;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            padding: 8px 24px;
-            border: 1px solid var(--cinnabar);
-            color: var(--cinnabar);
-            font-size: 14px;
-            letter-spacing: 4px;
-            margin-bottom: 30px;
-            position: relative;
-        }
-
-        .hero-badge::before,
-        .hero-badge::after {
-            content: '◆';
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 8px;
-        }
-
-        .hero-badge::before {
-            left: 8px;
-        }
-
-        .hero-badge::after {
-            right: 8px;
-        }
-
-        .hero h1 {
-            font-family: 'Noto Serif SC', serif;
-            font-size: 72px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            letter-spacing: 20px;
-            color: var(--ink-black);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .hero-subtitle {
-            font-size: 24px;
-            color: var(--bamboo);
-            margin-bottom: 40px;
-            letter-spacing: 8px;
-        }
-
-        .hero-desc {
-            font-size: 18px;
-            color: #666;
-            line-height: 2;
-            margin-bottom: 50px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-cta {
-            display: inline-flex;
-            gap: 20px;
-        }
-
-        .btn-primary {
-            padding: 16px 40px;
-            background: var(--cinnabar);
-            color: white;
-            text-decoration: none;
-            font-size: 16px;
-            letter-spacing: 2px;
-            border-radius: 4px;
-            transition: all 0.3s;
-            border: 2px solid var(--cinnabar);
-        }
-
-        .btn-primary:hover {
-            background: transparent;
-            color: var(--cinnabar);
-        }
-
-        .btn-secondary {
-            padding: 16px 40px;
-            background: transparent;
-            color: var(--ink-black);
-            text-decoration: none;
-            font-size: 16px;
-            letter-spacing: 2px;
-            border-radius: 4px;
-            border: 2px solid var(--ink-black);
-            transition: all 0.3s;
-        }
-
-        .btn-secondary:hover {
-            background: var(--ink-black);
-            color: white;
-        }
-
-        /* 装饰元素 */
-        .decoration-line {
-            position: absolute;
-            width: 1px;
-            height: 200px;
-            background: linear-gradient(to bottom, transparent, var(--cinnabar), transparent);
-            left: 10%;
-            top: 50%;
-            transform: translateY(-50%);
-            opacity: 0.3;
-        }
-
-        .decoration-line.right {
-            left: auto;
-            right: 10%;
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            color: var(--bamboo);
-            font-size: 12px;
-            letter-spacing: 2px;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(10px); }
-        }
-
-        .scroll-indicator::after {
-            content: '↓';
-            font-size: 20px;
-        }
-
-        /* 通用区域样式 */
-        section {
-            padding: 120px 40px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 80px;
-        }
-
-        .section-tag {
-            display: inline-block;
-            padding: 6px 20px;
-            background: rgba(196, 92, 72, 0.1);
-            color: var(--cinnabar);
-            font-size: 14px;
-            letter-spacing: 3px;
-            margin-bottom: 20px;
-            border-radius: 20px;
-        }
-
-        .section-title {
-            font-family: 'Noto Serif SC', serif;
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            letter-spacing: 8px;
-        }
-
-        .section-subtitle {
-            font-size: 18px;
-            color: #666;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* 关于我们 */
-        .about {
-            background: white;
-            position: relative;
-        }
-
-        .about::before {
             content: '医';
             position: absolute;
+            right: -5%;
             top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translateY(-50%);
             font-family: 'Noto Serif SC', serif;
-            font-size: 400px;
-            color: rgba(0,0,0,0.02);
+            font-size: 50vw;
+            color: rgba(139,69,19,0.03);
             pointer-events: none;
             z-index: 0;
         }
 
-        .about-content {
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 80px;
+            gap: 4rem;
             align-items: center;
+            width: 100%;
+        }
+
+        .hero-text {
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(201,162,39,0.15);
+            color: var(--accent);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h2 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .hero h2 span {
+            color: var(--primary);
+            position: relative;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 16px 36px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(139,69,19,0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(139,69,19,0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            padding: 16px 36px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 2px solid var(--primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .hero-image {
             position: relative;
             z-index: 1;
         }
 
-        .about-text h3 {
-            font-family: 'Noto Serif SC', serif;
-            font-size: 32px;
-            margin-bottom: 30px;
-            color: var(--ink-black);
-        }
-
-        .about-text p {
-            font-size: 16px;
-            color: #555;
-            margin-bottom: 20px;
-            line-height: 2;
-        }
-
-        .about-features {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .feature-item {
-            padding: 30px;
-            background: var(--rice-paper);
-            border-radius: 8px;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-
-        .feature-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .feature-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
-        }
-
-        .feature-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .feature-desc {
-            font-size: 14px;
-            color: #666;
-        }
-
-        .about-image {
+        .hero-image-wrapper {
             position: relative;
-        }
-
-        .about-image-main {
-            width: 100%;
-            height: 500px;
-            background: linear-gradient(135deg, #e8e0d0 0%, #d0c8b8 100%);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 120px;
-            color: rgba(0,0,0,0.1);
-            position: relative;
+            border-radius: 20px;
             overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
         }
 
-        .about-image-main::before {
-            content: '';
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .floating-card {
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 10px,
-                rgba(255,255,255,0.1) 10px,
-                rgba(255,255,255,0.1) 20px
-            );
-            animation: shimmer 20s linear infinite;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            animation: float 3s ease-in-out infinite;
         }
 
-        @keyframes shimmer {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
+        .floating-card.card-1 {
+            bottom: 10%;
+            left: -10%;
+            animation-delay: 0s;
         }
 
-        .about-image-frame {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            right: -20px;
-            bottom: -20px;
-            border: 2px solid var(--cinnabar);
-            border-radius: 8px;
-            z-index: -1;
+        .floating-card.card-2 {
+            top: 10%;
+            right: -5%;
+            animation-delay: 1.5s;
         }
 
-        /* 服务项目 */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .stat-number {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        /* Services Section */
         .services {
-            background: var(--rice-paper);
+            padding: 100px 5%;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: rgba(139,69,19,0.1);
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .section-header h3 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-light);
+            font-size: 1.05rem;
         }
 
         .services-grid {
+            max-width: 1400px;
+            margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
         }
 
         .service-card {
-            background: white;
-            padding: 50px 40px;
-            border-radius: 8px;
-            text-align: center;
+            background: var(--bg-cream);
+            border-radius: 20px;
+            padding: 2.5rem;
             transition: all 0.3s;
             position: relative;
             overflow: hidden;
@@ -501,13 +368,13 @@
             left: 0;
             width: 100%;
             height: 4px;
-            background: var(--cinnabar);
+            background: linear-gradient(90deg, var(--primary), var(--accent));
             transform: scaleX(0);
             transition: transform 0.3s;
         }
 
         .service-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
 
@@ -516,91 +383,106 @@
         }
 
         .service-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 30px;
-            background: rgba(196, 92, 72, 0.1);
-            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 36px;
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 1.5rem;
         }
 
-        .service-title {
+        .service-card h4 {
             font-family: 'Noto Serif SC', serif;
-            font-size: 24px;
-            margin-bottom: 15px;
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            margin-bottom: 0.8rem;
         }
 
-        .service-desc {
-            font-size: 15px;
-            color: #666;
-            line-height: 1.8;
+        .service-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.7;
         }
 
-        /* 医师团队 */
+        /* Doctors Section */
         .doctors {
-            background: white;
+            padding: 100px 5%;
+            background: linear-gradient(180deg, var(--bg-cream) 0%, white 100%);
         }
 
         .doctors-grid {
+            max-width: 1400px;
+            margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
         }
 
         .doctor-card {
-            text-align: center;
-            padding: 40px 30px;
-            background: var(--rice-paper);
-            border-radius: 8px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             transition: all 0.3s;
         }
 
         .doctor-card:hover {
-            background: white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
         }
 
-        .doctor-avatar {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 25px;
-            background: linear-gradient(135deg, #d0c8b8 0%, #e8e0d0 100%);
-            border-radius: 50%;
+        .doctor-image {
+            height: 320px;
+            background: linear-gradient(135deg, #e8e4df 0%, #d4cfc7 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 60px;
-            border: 4px solid white;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            font-size: 5rem;
+            color: var(--primary);
+            opacity: 0.8;
+        }
+
+        .doctor-info {
+            padding: 1.8rem;
         }
 
         .doctor-name {
             font-family: 'Noto Serif SC', serif;
-            font-size: 24px;
-            margin-bottom: 8px;
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            margin-bottom: 0.3rem;
         }
 
         .doctor-title {
-            color: var(--cinnabar);
-            font-size: 14px;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
         }
 
         .doctor-specialty {
-            font-size: 14px;
-            color: #666;
-            line-height: 1.6;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
-        /* 预约区域 */
+        .specialty-tag {
+            background: rgba(139,69,19,0.1);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        /* Booking Section */
         .booking {
-            background: linear-gradient(135deg, var(--ink-black) 0%, #2a2a2a 100%);
+            padding: 100px 5%;
+            background: linear-gradient(135deg, var(--secondary) 0%, #1a3333 100%);
             color: white;
-            text-align: center;
             position: relative;
             overflow: hidden;
         }
@@ -608,67 +490,96 @@
         .booking::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(196, 92, 72, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 50%, rgba(90, 122, 90, 0.1) 0%, transparent 50%);
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(201,162,39,0.1) 0%, transparent 70%);
+            border-radius: 50%;
         }
 
-        .booking .section-title {
-            color: white;
+        .booking-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
         }
 
-        .booking .section-subtitle {
-            color: rgba(255,255,255,0.7);
+        .booking-text h3 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .booking-text p {
+            color: rgba(255,255,255,0.8);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .booking-features {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(201,162,39,0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 1.2rem;
         }
 
         .booking-form {
-            max-width: 800px;
-            margin: 60px auto 0;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            position: relative;
-            z-index: 1;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
         }
 
         .form-group {
-            text-align: left;
-        }
-
-        .form-group.full {
-            grid-column: 1 / -1;
+            margin-bottom: 1.5rem;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
             color: rgba(255,255,255,0.8);
-            letter-spacing: 1px;
         }
 
         .form-group input,
-        .form-group select,
-        .form-group textarea {
+        .form-group select {
             width: 100%;
-            padding: 15px 20px;
+            padding: 14px 18px;
             border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
             background: rgba(255,255,255,0.05);
             color: white;
-            border-radius: 4px;
-            font-size: 16px;
+            font-size: 1rem;
             transition: all 0.3s;
         }
 
         .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
+        .form-group select:focus {
             outline: none;
-            border-color: var(--cinnabar);
+            border-color: var(--accent);
             background: rgba(255,255,255,0.1);
         }
 
@@ -676,177 +587,108 @@
             color: rgba(255,255,255,0.4);
         }
 
-        .btn-submit {
-            grid-column: 1 / -1;
-            padding: 18px 60px;
-            background: var(--cinnabar);
-            color: white;
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--accent) 0%, #b8941f 100%);
+            color: var(--text-dark);
             border: none;
-            font-size: 16px;
-            letter-spacing: 4px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            border-radius: 4px;
             transition: all 0.3s;
-            margin-top: 20px;
         }
 
-        .btn-submit:hover {
-            background: #a84a3a;
+        .submit-btn:hover {
             transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(201,162,39,0.3);
         }
 
-        /* 联系方式 */
-        .contact {
-            background: var(--rice-paper);
-        }
-
-        .contact-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-        }
-
-        .contact-info h3 {
-            font-family: 'Noto Serif SC', serif;
-            font-size: 32px;
-            margin-bottom: 40px;
-        }
-
-        .contact-item {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 30px;
-            align-items: flex-start;
-        }
-
-        .contact-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--cinnabar);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 20px;
-            flex-shrink: 0;
-        }
-
-        .contact-text h4 {
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-
-        .contact-text p {
-            color: #666;
-            font-size: 15px;
-        }
-
-        .contact-map {
-            background: #ddd;
-            border-radius: 8px;
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
-            font-size: 18px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .contact-map::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                repeating-linear-gradient(
-                    0deg,
-                    transparent,
-                    transparent 19px,
-                    rgba(0,0,0,0.03) 20px
-                ),
-                repeating-linear-gradient(
-                    90deg,
-                    transparent,
-                    transparent 19px,
-                    rgba(0,0,0,0.03) 20px
-                );
-        }
-
-        /* 页脚 */
+        /* Footer */
         footer {
-            background: var(--ink-black);
+            background: var(--text-dark);
             color: white;
-            padding: 60px 40px 30px;
-            text-align: center;
+            padding: 60px 5% 30px;
         }
 
         .footer-content {
             max-width: 1400px;
             margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
         }
 
-        .footer-logo {
+        .footer-brand h4 {
             font-family: 'Noto Serif SC', serif;
-            font-size: 36px;
-            margin-bottom: 20px;
-            letter-spacing: 8px;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
         }
 
-        .footer-desc {
+        .footer-brand p {
             color: rgba(255,255,255,0.6);
-            margin-bottom: 40px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            font-size: 0.95rem;
+            line-height: 1.7;
         }
 
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-bottom: 40px;
+        .footer-column h5 {
+            font-size: 1rem;
+            margin-bottom: 1.2rem;
+            color: var(--accent);
         }
 
-        .footer-links a {
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column a {
             color: rgba(255,255,255,0.6);
             text-decoration: none;
             transition: color 0.3s;
         }
 
-        .footer-links a:hover {
-            color: var(--cinnabar);
+        .footer-column a:hover {
+            color: white;
         }
 
         .footer-bottom {
+            max-width: 1400px;
+            margin: 3rem auto 0;
+            padding-top: 2rem;
             border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 30px;
+            text-align: center;
             color: rgba(255,255,255,0.4);
-            font-size: 14px;
+            font-size: 0.9rem;
         }
 
-        /* 响应式 */
-        @media (max-width: 1024px) {
-            .hero h1 {
-                font-size: 48px;
-                letter-spacing: 10px;
-            }
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary);
+        }
 
-            .about-content,
-            .contact-content {
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-content,
+            .booking-content {
                 grid-template-columns: 1fr;
             }
 
-            .services-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .hero h2 {
+                font-size: 2.5rem;
             }
 
-            .doctors-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
             }
         }
 
@@ -855,13 +697,24 @@
                 display: none;
             }
 
-            .hero h1 {
-                font-size: 36px;
-                letter-spacing: 5px;
+            .mobile-menu-btn {
+                display: block;
             }
 
-            .hero-subtitle {
-                font-size: 18px;
+            .cta-button {
+                display: none;
+            }
+
+            .hero {
+                padding: 100px 5% 60px;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .floating-card {
+                display: none;
             }
 
             .services-grid,
@@ -869,298 +722,303 @@
                 grid-template-columns: 1fr;
             }
 
-            .booking-form {
+            .footer-content {
                 grid-template-columns: 1fr;
+                text-align: center;
             }
 
-            section {
-                padding: 80px 20px;
+            .booking-form {
+                padding: 1.5rem;
             }
+        }
 
-            .section-title {
-                font-size: 32px;
-            }
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
-    <div class="ink-bg"></div>
-    
-    <!-- 导航 -->
-    <nav id="navbar">
-        <div class="nav-container">
-            <div class="logo">
-                <div class="logo-icon">仁</div>
-                <div>
-                    <div class="logo-text">仁和堂</div>
-                    <div class="logo-sub">REN HE TANG</div>
-                </div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">
+            <div class="logo-icon">仁</div>
+            <div class="logo-text">
+                <h1>仁和堂中医馆</h1>
+                <p>REN HE TANG</p>
             </div>
-            <ul class="nav-links">
-                <li><a href="#home">首页</a></li>
-                <li><a href="#about">关于我们</a></li>
-                <li><a href="#services">诊疗项目</a></li>
-                <li><a href="#doctors">医师团队</a></li>
-                <li><a href="#booking">预约挂号</a></li>
-                <li><a href="#contact">联系我们</a></li>
-            </ul>
         </div>
+        <ul class="nav-links">
+            <li><a href="#home">首页</a></li>
+            <li><a href="#services">特色诊疗</a></li>
+            <li><a href="#doctors">名医团队</a></li>
+            <li><a href="#about">关于我们</a></li>
+            <li><a href="#contact">联系方式</a></li>
+        </ul>
+        <a href="#booking" class="cta-button">立即预约</a>
+        <button class="mobile-menu-btn">☰</button>
     </nav>
 
-    <!-- Hero -->
+    <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="decoration-line"></div>
-        <div class="decoration-line right"></div>
         <div class="hero-content">
-            <div class="hero-badge">传承 · 创新 · 仁心</div>
-            <h1>仁和堂中医馆</h1>
-            <p class="hero-subtitle">传承千年中医智慧 · 守护百姓健康生活</p>
-            <p class="hero-desc">
-                汇聚名医名家，秉承"仁心仁术"之古训<br>
-                以传统中医为基础，结合现代医学技术<br>
-                为您提供专业、贴心的中医诊疗服务
-            </p>
-            <div class="hero-cta">
-                <a href="#booking" class="btn-primary">立即预约</a>
-                <a href="#about" class="btn-secondary">了解更多</a>
-            </div>
-        </div>
-        <div class="scroll-indicator">向下滚动</div>
-    </section>
-
-    <!-- 关于我们 -->
-    <section class="about" id="about">
-        <div class="section-header">
-            <span class="section-tag">关于仁和堂</span>
-            <h2 class="section-title">百年传承 仁心仁术</h2>
-            <p class="section-subtitle">秉承传统中医精髓，融合现代医学理念，致力于为患者提供最优质的中医诊疗服务</p>
-        </div>
-        <div class="about-content">
-            <div class="about-text">
-                <h3>医者仁心 悬壶济世</h3>
-                <p>仁和堂始创于清光绪年间，历经百年沧桑，始终秉承"仁心仁术、悬壶济世"的祖训。我们汇聚了一批经验丰富、医术精湛的中医名家，在继承传统中医精华的基础上，不断探索创新，形成了独具特色的诊疗体系。</p>
-                <p>馆内设有中医内科、针灸推拿、中药调理、养生保健等多个科室，配备先进的中药煎制设备和舒适的就诊环境，为患者提供全方位的中医健康服务。</p>
-                <div class="about-features">
-                    <div class="feature-item">
-                        <div class="feature-icon">🏥</div>
-                        <div class="feature-title">专业诊疗</div>
-                        <div class="feature-desc">名老中医亲诊</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">🌿</div>
-                        <div class="feature-title">道地药材</div>
-                        <div class="feature-desc">精选优质中药</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">📋</div>
-                        <div class="feature-title">个性方案</div>
-                        <div class="feature-desc">辨证施治调理</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">💝</div>
-                        <div class="feature-title">贴心服务</div>
-                        <div class="feature-desc">全程温馨关怀</div>
-                    </div>
+            <div class="hero-text">
+                <div class="hero-badge">
+                    <span>✦</span>
+                    <span>百年传承 · 国医精粹</span>
+                </div>
+                <h2>
+                    传承<span>千年智慧</span><br>
+                    守护万家健康
+                </h2>
+                <p class="hero-description">
+                    汇聚京城名医，融合传统中医精髓与现代诊疗技术。
+                    以"仁心仁术"为宗旨，为您提供个性化、全方位的中医健康管理方案。
+                </p>
+                <div class="hero-buttons">
+                    <a href="#booking" class="btn-primary">
+                        <span>在线问诊</span>
+                        <span>→</span>
+                    </a>
+                    <a href="#services" class="btn-secondary">
+                        <span>了解服务</span>
+                    </a>
                 </div>
             </div>
-            <div class="about-image">
-                <div class="about-image-main">医</div>
-                <div class="about-image-frame"></div>
+            <div class="hero-image">
+                <div class="hero-image-wrapper">
+                    <div style="height: 500px; background: linear-gradient(135deg, #e8e4df 0%, #d4cfc7 100%); display: flex; align-items: center; justify-content: center; font-size: 8rem; color: var(--primary); opacity: 0.6;">
+                        中
+                    </div>
+                </div>
+                <div class="floating-card card-1">
+                    <div class="stat-number">30+</div>
+                    <div class="stat-label">年临床经验</div>
+                </div>
+                <div class="floating-card card-2">
+                    <div class="stat-number">50000+</div>
+                    <div class="stat-label">康复患者</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- 服务项目 -->
+    <!-- Services Section -->
     <section class="services" id="services">
-        <div class="section-header">
-            <span class="section-tag">诊疗项目</span>
-            <h2 class="section-title">中医特色诊疗</h2>
-            <p class="section-subtitle">传承古法，结合现代科技，为您提供全面的中医健康解决方案</p>
+        <div class="section-header fade-in">
+            <span class="section-tag">特色诊疗</span>
+            <h3>传统中医 · 现代诊疗</h3>
+            <p>继承千年中医智慧，结合现代医学技术，为您提供专业、全面的健康解决方案</p>
         </div>
         <div class="services-grid">
-            <div class="service-card">
-                <div class="service-icon">🩺</div>
-                <h3 class="service-title">中医内科</h3>
-                <p class="service-desc">运用中医四诊合参，辨证施治，治疗各种内科疾病，包括脾胃病、呼吸系统疾病、心脑血管疾病等</p>
+            <div class="service-card fade-in">
+                <div class="service-icon">望</div>
+                <h4>中医体质辨识</h4>
+                <p>通过望闻问切四诊合参，精准辨识您的体质类型，制定个性化调理方案，从根本上改善亚健康状态。</p>
             </div>
-            <div class="service-card">
-                <div class="service-icon">📍</div>
-                <h3 class="service-title">针灸推拿</h3>
-                <p class="service-desc">传统针灸配合现代推拿手法，治疗颈肩腰腿痛、神经系统疾病，调理亚健康状态</p>
+            <div class="service-card fade-in">
+                <div class="service-icon">闻</div>
+                <h4>针灸推拿治疗</h4>
+                <p>运用传统针灸、推拿手法，疏通经络、调和气血，有效治疗颈椎病、腰椎间盘突出等常见病症。</p>
             </div>
-            <div class="service-card">
-                <div class="service-icon">🌱</div>
-                <h3 class="service-title">中药调理</h3>
-                <p class="service-desc">根据体质辨识，定制个性化中药调理方案，增强体质，预防疾病，延缓衰老</p>
+            <div class="service-card fade-in">
+                <div class="service-icon">问</div>
+                <h4>中药调理配方</h4>
+                <p>精选道地药材，遵循古法炮制，一人一方、辨证施治，针对慢性病、亚健康等进行系统调理。</p>
             </div>
-            <div class="service-card">
-                <div class="service-icon">🧘</div>
-                <h3 class="service-title">养生保健</h3>
-                <p class="service-desc">提供中医体质辨识、食疗指导、节气养生等服务，帮助您建立健康的生活方式</p>
+            <div class="service-card fade-in">
+                <div class="service-icon">切</div>
+                <h4>经络养生调理</h4>
+                <p>采用刮痧、拔罐、艾灸等传统疗法，温通经络、祛寒除湿，达到防病治病、强身健体的效果。</p>
             </div>
-            <div class="service-card">
-                <div class="service-icon">👶</div>
-                <h3 class="service-title">儿科中医</h3>
-                <p class="service-desc">小儿推拿、中药调理，绿色疗法治疗小儿常见病，呵护孩子健康成长</p>
+            <div class="service-card fade-in">
+                <div class="service-icon">养</div>
+                <h4>四季养生指导</h4>
+                <p>根据二十四节气变化，提供饮食、起居、运动等全方位养生建议，顺应自然规律，保持身心健康。</p>
             </div>
-            <div class="service-card">
-                <div class="service-icon">👩</div>
-                <h3 class="service-title">妇科调理</h3>
-                <p class="service-desc">运用中医调理月经不调、痛经、更年期综合征等妇科疾病，呵护女性健康</p>
+            <div class="service-card fade-in">
+                <div class="service-icon">和</div>
+                <h4>专家会诊服务</h4>
+                <p>疑难杂症患者可享受多位名老中医联合会诊，集思广益，为您制定最优治疗方案。</p>
             </div>
         </div>
     </section>
 
-    <!-- 医师团队 -->
+    <!-- Doctors Section -->
     <section class="doctors" id="doctors">
-        <div class="section-header">
-            <span class="section-tag">医师团队</span>
-            <h2 class="section-title">名医名家</h2>
-            <p class="section-subtitle">汇聚中医名家，传承国医精髓</p>
+        <div class="section-header fade-in">
+            <span class="section-tag">名医团队</span>
+            <h3>国医大师 · 匠心传承</h3>
+            <p>汇聚京城知名中医专家，平均临床经验超过30年</p>
         </div>
         <div class="doctors-grid">
-            <div class="doctor-card">
-                <div class="doctor-avatar">张</div>
-                <h3 class="doctor-name">张德明</h3>
-                <p class="doctor-title">主任医师 / 教授</p>
-                <p class="doctor-specialty">擅长：脾胃病、消化系统疾病、中医内科疑难杂症</p>
+            <div class="doctor-card fade-in">
+                <div class="doctor-image">👨‍⚕️</div>
+                <div class="doctor-info">
+                    <h4 class="doctor-name">张仲景</h4>
+                    <p class="doctor-title">主任医师 · 教授</p>
+                    <div class="doctor-specialty">
+                        <span class="specialty-tag">内科杂病</span>
+                        <span class="specialty-tag">脾胃调理</span>
+                    </div>
+                </div>
             </div>
-            <div class="doctor-card">
-                <div class="doctor-avatar">李</div>
-                <h3 class="doctor-name">李秀兰</h3>
-                <p class="doctor-title">副主任医师</p>
-                <p class="doctor-specialty">擅长：妇科疾病、月经不调、更年期综合征调理</p>
+            <div class="doctor-card fade-in">
+                <div class="doctor-image">👩‍⚕️</div>
+                <div class="doctor-info">
+                    <h4 class="doctor-name">李时珍</h4>
+                    <p class="doctor-title">副主任医师 · 博士</p>
+                    <div class="doctor-specialty">
+                        <span class="specialty-tag">妇科调理</span>
+                        <span class="specialty-tag">不孕不育</span>
+                    </div>
+                </div>
             </div>
-            <div class="doctor-card">
-                <div class="doctor-avatar">王</div>
-                <h3 class="doctor-name">王建国</h3>
-                <p class="doctor-title">主任医师</p>
-                <p class="doctor-specialty">擅长：针灸推拿、颈肩腰腿痛、神经系统疾病</p>
+            <div class="doctor-card fade-in">
+                <div class="doctor-image">👨‍⚕️</div>
+                <div class="doctor-info">
+                    <h4 class="doctor-name">孙思邈</h4>
+                    <p class="doctor-title">主任医师 · 博士生导师</p>
+                    <div class="doctor-specialty">
+                        <span class="specialty-tag">针灸推拿</span>
+                        <span class="specialty-tag">疼痛管理</span>
+                    </div>
+                </div>
             </div>
-            <div class="doctor-card">
-                <div class="doctor-avatar">陈</div>
-                <h3 class="doctor-name">陈雅琴</h3>
-                <p class="doctor-title">主治医师</p>
-                <p class="doctor-specialty">擅长：儿科疾病、小儿推拿、儿童体质调理</p>
+            <div class="doctor-card fade-in">
+                <div class="doctor-image">👩‍⚕️</div>
+                <div class="doctor-info">
+                    <h4 class="doctor-name">华佗</h4>
+                    <p class="doctor-title">副主任医师</p>
+                    <div class="doctor-specialty">
+                        <span class="specialty-tag">骨伤科</span>
+                        <span class="specialty-tag">运动损伤</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- 预约挂号 -->
+    <!-- Booking Section -->
     <section class="booking" id="booking">
-        <div class="section-header">
-            <span class="section-tag" style="background: rgba(255,255,255,0.1);">预约挂号</span>
-            <h2 class="section-title">在线预约</h2>
-            <p class="section-subtitle">填写以下信息，我们将尽快与您联系确认预约</p>
-        </div>
-        <form class="booking-form">
-            <div class="form-group">
-                <label>您的姓名</label>
-                <input type="text" placeholder="请输入姓名">
-            </div>
-            <div class="form-group">
-                <label>联系电话</label>
-                <input type="tel" placeholder="请输入手机号码">
-            </div>
-            <div class="form-group">
-                <label>预约科室</label>
-                <select>
-                    <option>请选择科室</option>
-                    <option>中医内科</option>
-                    <option>针灸推拿</option>
-                    <option>中药调理</option>
-                    <option>养生保健</option>
-                    <option>儿科中医</option>
-                    <option>妇科调理</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>预约日期</label>
-                <input type="date">
-            </div>
-            <div class="form-group full">
-                <label>症状描述</label>
-                <textarea rows="4" placeholder="请简要描述您的症状或就诊需求"></textarea>
-            </div>
-            <button type="submit" class="btn-submit">提交预约</button>
-        </form>
-    </section>
-
-    <!-- 联系我们 -->
-    <section class="contact" id="contact">
-        <div class="section-header">
-            <span class="section-tag">联系我们</span>
-            <h2 class="section-title">就诊信息</h2>
-            <p class="section-subtitle">欢迎前来咨询就诊，我们将竭诚为您服务</p>
-        </div>
-        <div class="contact-content">
-            <div class="contact-info">
-                <h3>仁和堂中医馆</h3>
-                <div class="contact-item">
-                    <div class="contact-icon">📍</div>
-                    <div class="contact-text">
-                        <h4>地址</h4>
-                        <p>北京市朝阳区建国路88号<br>仁和堂大厦1-3层</p>
+        <div class="booking-content">
+            <div class="booking-text">
+                <span class="section-tag" style="background: rgba(255,255,255,0.1); color: white;">在线预约</span>
+                <h3>预约挂号 · 便捷高效</h3>
+                <p>无需排队等待，随时随地在线预约专家号。我们将根据您的症状和需求，为您匹配最适合的医师。</p>
+                <div class="booking-features">
+                    <div class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>三甲医院专家坐诊</span>
                     </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">📞</div>
-                    <div class="contact-text">
-                        <h4>电话</h4>
-                        <p>010-8888 8888<br>400-888-8888（全国热线）</p>
+                    <div class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>一对一私密诊疗</span>
                     </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">🕐</div>
-                    <div class="contact-text">
-                        <h4>营业时间</h4>
-                        <p>周一至周五：08:00 - 20:00<br>周六周日：08:00 - 18:00</p>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">✉️</div>
-                    <div class="contact-text">
-                        <h4>邮箱</h4>
-                        <p>contact@renhetang.com</p>
+                    <div class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>全程导医陪同服务</span>
                     </div>
                 </div>
             </div>
-            <div class="contact-map">
-                [地图区域]
+            <div class="booking-form">
+                <form onsubmit="event.preventDefault(); alert('预约成功！我们将尽快与您联系确认。');">
+                    <div class="form-group">
+                        <label>您的姓名</label>
+                        <input type="text" placeholder="请输入姓名" required>
+                    </div>
+                    <div class="form-group">
+                        <label>联系电话</label>
+                        <input type="tel" placeholder="请输入手机号" required>
+                    </div>
+                    <div class="form-group">
+                        <label>选择科室</label>
+                        <select required>
+                            <option value="">请选择</option>
+                            <option value="tcm-internal">中医内科</option>
+                            <option value="acupuncture">针灸推拿科</option>
+                            <option value="gynecology">中医妇科</option>
+                            <option value="orthopedics">中医骨伤科</option>
+                            <option value="pediatrics">中医儿科</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>预约日期</label>
+                        <input type="date" required>
+                    </div>
+                    <button type="submit" class="submit-btn">立即预约</button>
+                </form>
             </div>
         </div>
     </section>
 
-    <!-- 页脚 -->
+    <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <div class="footer-logo">仁和堂</div>
-            <p class="footer-desc">传承千年中医智慧，守护百姓健康生活。仁和堂，您身边的中医健康专家。</p>
-            <div class="footer-links">
-                <a href="#home">首页</a>
-                <a href="#about">关于我们</a>
-                <a href="#services">诊疗项目</a>
-                <a href="#doctors">医师团队</a>
-                <a href="#booking">预约挂号</a>
+            <div class="footer-brand">
+                <h4>仁和堂中医馆</h4>
+                <p>传承千年中医文化，以仁心仁术服务百姓健康。<br>我们致力于将传统中医智慧与现代生活相结合，<br>为每一位患者提供个性化、全方位的健康管理方案。</p>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 仁和堂中医馆 版权所有 | 京ICP备XXXXXXXX号</p>
+            <div class="footer-column">
+                <h5>快速链接</h5>
+                <ul>
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#services">特色诊疗</a></li>
+                    <li><a href="#doctors">名医团队</a></li>
+                    <li><a href="#booking">在线预约</a></li>
+                </ul>
             </div>
+            <div class="footer-column">
+                <h5>服务项目</h5>
+                <ul>
+                    <li><a href="#">体质辨识</a></li>
+                    <li><a href="#">针灸推拿</a></li>
+                    <li><a href="#">中药调理</a></li>
+                    <li><a href="#">养生保健</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h5>联系我们</h5>
+                <ul>
+                    <li><a href="#">📍 北京市朝阳区xxx路xx号</a></li>
+                    <li><a href="#">📞 010-8888-8888</a></li>
+                    <li><a href="#">✉️ contact@renhetang.com</a></li>
+                    <li><a href="#">🕐 周一至周日 8:00-20:00</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 仁和堂中医馆 版权所有 | 京ICP备xxxxxxxx号</p>
         </div>
     </footer>
 
     <script>
-        // 导航栏滚动效果
-        window.addEventListener('scroll', function() {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+        // Scroll Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
         });
 
-        // 平滑滚动
+        // Smooth Scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1174,10 +1032,19 @@
             });
         });
 
-        // 表单提交
-        document.querySelector('.booking-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('预约信息已提交，我们将尽快与您联系！');
+        // Navbar Scroll Effect
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                navbar.style.boxShadow = '0 2px 30px rgba(0,0,0,0.1)';
+            } else {
+                navbar.style.boxShadow = '0 2px 30px rgba(0,0,0,0.08)';
+            }
+            
+            lastScroll = currentScroll;
         });
     </script>
 </body>
